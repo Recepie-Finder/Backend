@@ -1,9 +1,9 @@
 const sqlite3 = require('sqlite3').verbose()
 const crypto = require("crypto")
 
-const DBSOURCE = "db.sqlite"
 
-let db = new sqlite3.Database(DBSOURCE, (err) => {
+
+let db = new sqlite3.Database("./db.sqlite",sqlite3.OPEN_READWRITE, (err) => {
     if (err) {
       console.error(err.message)
       throw err
