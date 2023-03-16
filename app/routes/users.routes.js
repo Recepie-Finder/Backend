@@ -3,8 +3,7 @@ const auth = require("../libs/middleware")
 
 module.exports = function(app){
 
-    app.route("/users")
-        .get(auth.isAuthenticated,users.getAll)
+    app.route("/register")
         .post(users.newUser)
 
     app.route("/users/:user_id")
