@@ -52,8 +52,8 @@ let db = new sqlite3.Database("./db.sqlite",sqlite3.OPEN_READWRITE, (err) => {
                     title text,
                     ingredients text,
                     directions text,
-                    date_published INTEGER,
-                    date_edited INTEGER,
+                    date_published DATE,
+                    date_edited DATE,
                     created_by INTEGER,
                     FOREIGN KEY(created_by) REFERENCES users(user_id)
                 )`,
