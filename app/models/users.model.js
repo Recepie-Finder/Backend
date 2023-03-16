@@ -19,6 +19,22 @@ const getAllUsers = (done) => {
     })
 }
 
+const getSingleUser = (id,done) => {
+    const sql = 'SELECT * FROM users WHERE user_id=?'
+
+    db.get(sql,[id],(err,row) => {
+        if (err) return done(err)
+        if (!row) return done(404)
+
+        return done(null, {
+            user_id: row.user_id,
+            first_name: row.first_name,
+            last_name: row.last_name,
+            email: row.email
+        })
+    })
+}
+
 const getHash = function(password,salt){
     return crypto.pbkdf2Sync(password,salt,100000,256,'sha256').toString('hex')
 }
@@ -96,6 +112,7 @@ const removeToken = (token,done) => {
 
 module.exports = {
     getAllUsers:getAllUsers,
+    getSingleUser:getSingleUser,
     getHash:getHash,
     postNewUser:postNewUser,
     authenticateUser:authenticateUser,

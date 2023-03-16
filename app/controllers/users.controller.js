@@ -9,6 +9,17 @@ const getAll = (req,res) => {
     })
 }
 
+const getSingle = (req,res) => {
+    let user_id = parseInt(req.params.user_id)
+
+    users.getSingleUser(user_id, (err,results) => {
+        if(err === 404) return res.sendStatus(404)
+        if(err) return res.sendStatus(err)
+
+        return res.status(200).send(results)
+    })
+}
+
 const newUser = (req,res) => {
     const schema = Joi.object({
         first_name: Joi.string().required(),
@@ -65,6 +76,7 @@ const logoutUser = (req,res) => {
 
 module.exports = {
     getAll:getAll,
+    getSingle:getSingle,
     newUser:newUser,
     loginUser:loginUser,
     logoutUser:logoutUser
