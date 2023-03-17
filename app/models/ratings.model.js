@@ -17,20 +17,21 @@ const addRating = (recipe_id, rating,user_id,done) => {
 
 
 const getRatings = (recipe_id, done) => {
-  let sql = 'SELECT *, AVG(rating) AS avg_rating FROM ratings WHERE recipe_id=?';
-
-  db.each(
-      sql, [recipe_id],
-      (err, row) => {
-          if (err) console.log("Something went wrong: " + err);
-          if (!row) return done(404)
-      },
-      (err, num_rows) => {
-          rating.avg_rating = row.avg_rating;
-          return done(err, num_rows, rating);
-      }
-  )
-}
+    let sql = 'SELECT *, AVG(rating) AS avg_rating FROM ratings WHERE recipe_id=?';
+    let rating= 0
+    db.each(
+        sql, [recipe_id],
+        (err, row) => {
+            if (err) console.log("Something went wrong: " + err);
+            if (!row) return done(404)
+            rating = row.avg_rating;
+        },
+        (err, num_rows) => {
+            return done(err, num_rows, rating);
+        }
+    )
+  }
+  
 
 
 

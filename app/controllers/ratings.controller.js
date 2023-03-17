@@ -39,7 +39,7 @@ const getRatings = (req, res) => {
     ratings.getRatings(recipe_id, (err, num_rows, rating) => {
         if (err === 404) return res.sendStatus(404)
         if (err) return res.sendStatus(500);
-        return res.status(200).send(rating);
+        return res.status(200).send({recipeRating: rating});
 
     })
     
