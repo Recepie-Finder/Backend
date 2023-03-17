@@ -19,14 +19,15 @@ const addRating = (req, res) => {
         }
 
         recipe.getSingleRecipe(recipe_id, (err, recipe) => {
+            
             if (err === 404) return res.sendStatus(404)
             if (err) return res.sendStatus(500)
-  
+        })
     ratings.addRating(recipe_id,rating,user_id, (err, id) => {
         if (err) return res.sendStatus(500);
         return res.status(201).send({rating_id: id})
     })
-    })
+    
 })
 }
 const getRatings = (req, res) => {

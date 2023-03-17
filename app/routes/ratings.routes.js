@@ -1,5 +1,5 @@
-const ratings = require("../controllers/ratings.controllers");
-const auth = require("../lib/authentication");
+const ratings = require("../controllers/ratings.controller");
+const auth = require("../libs/middleware");
 
 module.exports = function(app) {
   app.route("/recipes/:recipe_id/ratings")
