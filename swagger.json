@@ -1,0 +1,512 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "REST API",
+      "description": ""
+    },
+    "host": "localhost:3000",
+    "basePath": "/", 
+    "schemes": [
+      "http"
+    ],
+    "paths": {
+      "/": {
+        "get": {
+          "description": "",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/register": {
+        "post": {
+          "description": "",
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "400": {
+              "description": "Bad Request"
+            }
+          },
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "User object that needs to be added to the system",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "John Doe"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "johndoe@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "Mypassword123!"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "/users/{user_id}": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "user_id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "examples": {
+                "application/json": {
+                  "id": "1",
+                  "name": "John Doe",
+                  "email": "johndoe@example.com"
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        }
+      },
+      "/login": {
+        "post": {
+          "description": "",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "User credentials to log in",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "johndoe@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "Mypassword123!"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/logout": {
+        "post": {
+          "description": "",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/recipes": {
+        "get": {
+          "description": "",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "examples": {
+                "application/json": [
+                  {
+                    "id": "1",
+                    "title": "Spaghetti Bolognese",
+                    "ingredients": [
+                      "1 pound spaghetti",
+                      "1/2 pound ground beef",
+                      "1/2 onion, chopped",
+                      "1/2 green bell pepper, chopped",
+                      "1 clove garlic, minced",
+                      "1 can (14.5 ounces) diced tomatoes",
+                      "1 tablespoon tomato paste",
+                      "1 teaspoon dried oregano",
+                      "1/2 teaspoon salt",
+                      "1/4 teaspoon black pepper"
+                    ],
+                    "directions": "1. Boil spaghetti.\n2. Cook beef.\n3. Mix beef and spaghetti."
+                  },
+                  {
+                    "id": "2",
+                    "title": "Chicken Stir-Fry",
+                    "ingredients": [
+                      "1 pound chicken breast, cut into strips",
+                      "2 tablespoons vegetable oil",
+                      "1/2 onion, chopped",
+                      "1/2 red bell pepper, chopped",
+                      "1/2 green bell pepper, chopped",
+                      "1 cup snow peas",
+                      "1/4 cup soy sauce",
+                      "2 tablespoons honey",
+                      "1 teaspoon sesame oil",
+                      "1/4 teaspoon black pepper"
+                    ],
+                    "directions": "1. Heat oil in a wok or large skillet.\n2. Add chicken and stir-fry for 2-3 minutes.\n3. Add vegetables and stir-fry for another 2-3 minutes.\n4. Add soy sauce, honey, sesame oil, and black pepper and stir-fry for another minute."
+                  }
+                ]
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "post": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "example": "Spaghetti Bolognese"
+                  },
+                  "ingredients": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "example": "1 pound spaghetti"
+                    }
+                  },
+                  "directions": {
+                    "type": "string",
+                    "example": "1. Boil spaghetti.\n2. Cook beef.\n3. Mix beef and spaghetti."
+                  }
+                },
+                "required": ["title", "ingredients", "directions"]
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "401": {
+              "description": "Unauthorized"
+            }
+          }
+        }
+      }, 
+      "/recipes/{recipe_id}": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "recipe_id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "examples": {
+                "application/json": {
+                    "id": "1",
+                    "title": "Spaghetti Bolognese",
+                    "ingredients": [
+                      "1 pound spaghetti",
+                      "1/2 pound ground beef",
+                      "1/2 onion, chopped",
+                      "1/2 green bell pepper, chopped",
+                      "1 clove garlic, minced",
+                      "1 can (14.5 ounces) diced tomatoes",
+                      "1 tablespoon tomato paste",
+                      "1 teaspoon dried oregano",
+                      "1/2 teaspoon salt",
+                      "1/4 teaspoon black pepper"
+                    ],
+                    "directions": "1. Boil spaghetti.\n2. Cook beef.\n3. Mix beef and spaghetti."
+                  }
+                }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "delete": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "recipe_id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "patch": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "recipe_id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "example": "any"
+                  },
+                  "ingredients": {
+                    "example": "any"
+                  },
+                  "directions": {
+                    "example": "any"
+                  }
+                },
+                "example": {
+                  "title": "Spaghetti Carbonara",
+                  "ingredients": [
+                    "1 pound spaghetti",
+                    "6 ounces pancetta",
+                    "4 large egg yolks",
+                    "1 cup freshly grated Parmesan cheese",
+                    "Salt and black pepper to taste"
+                  ],
+                  "directions": [
+                    "Cook the spaghetti according to the package instructions.",
+                    "In a large skillet, cook the pancetta over medium heat until crispy.",
+                    "In a small bowl, whisk together the egg yolks and Parmesan cheese.",
+                    "When the spaghetti is done, reserve 1 cup of the pasta water and drain the rest.",
+                    "Add the spaghetti to the skillet with the pancetta and toss to coat.",
+                    "Remove the skillet from the heat and add the egg yolk mixture, tossing quickly to prevent the eggs from scrambling.",
+                    "Add reserved pasta water, a little at a time, to create a creamy sauce.",
+                    "Season with salt and black pepper to taste and serve immediately."
+                  ]
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"}
+            }
+        }
+    }
+,
+"/recipesByUser": {
+    "get": {
+      "description": "",
+      "parameters": [],
+      "responses": {
+        "200": {
+          "description": "OK",
+          "examples": {
+            "application/json": [
+              {
+                "id": "1",
+                "title": "Spaghetti Bolognese",
+                "ingredients": [
+                  "1 pound spaghetti",
+                  "1/2 pound ground beef",
+                  "1/2 onion, chopped",
+                  "1/2 green bell pepper, chopped",
+                  "1 clove garlic, minced",
+                  "1 can (14.5 ounces) diced tomatoes",
+                  "1 tablespoon tomato paste",
+                  "1 teaspoon dried oregano",
+                  "1/2 teaspoon salt",
+                  "1/4 teaspoon black pepper"
+                ],
+                "directions": "1. Boil spaghetti.\n2. Cook beef.\n3. Mix beef and spaghetti."
+              },
+              {
+                "id": "2",
+                "title": "Chicken Stir-Fry",
+                "ingredients": [
+                  "1 pound chicken breast, cut into strips",
+                  "2 tablespoons vegetable oil",
+                  "1/2 onion, chopped",
+                  "1/2 red bell pepper, chopped",
+                  "1/2 green bell pepper, chopped",
+                  "1 cup snow peas",
+                  "1/4 cup soy sauce",
+                  "2 tablespoons honey",
+                  "1 teaspoon sesame oil",
+                  "1/4 teaspoon black pepper"
+                ],
+                "directions": "1. Heat oil in a wok or large skillet.\n2. Add chicken and stir-fry for 2-3 minutes.\n3. Add vegetables and stir-fry for another 2-3 minutes.\n4. Add soy sauce, honey, sesame oil, and black pepper and stir-fry for another minute."
+              }
+            ]
+          }
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "500": {
+          "description": "Internal Server Error"
+        }
+      
+      }
+    }
+  },
+  "/recipes/{recipe_id}/ratings": {
+    "get": {
+      "description": "",
+      "parameters": [
+        {
+          "name": "recipe_id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "OK",
+          "examples": {
+            "application/json": {"recipeRating":"4.5"}
+          }   
+        },
+        "404": {
+          "description": "Not Found"
+        },
+        "500": {
+          "description": "Internal Server Error"
+        }
+      }
+    },
+    "post": {
+      "description": "",
+      "parameters": [
+        {
+          "name": "recipe_id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "body",
+          "in": "body",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "rating": {
+                "example": "1-5"
+              }
+            }
+          }
+        }
+      ],
+      "responses": {
+        "201": {
+          "description": "Created"
+        },
+        "400": {
+          "description": "Bad Request"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Not Found"
+        },
+        "500": {
+          "description": "Internal Server Error"
+        }
+      }
+    }
+  }
+}
+}
+

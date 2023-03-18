@@ -3,6 +3,8 @@ const morgan = require('morgan')
 const bodyParser = require("body-parser");
 const cors = require("cors")
 const db = require('./database.js');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 
 
 const app = express()
@@ -14,7 +16,11 @@ const HTTP_PORT = 3333
 app.listen(HTTP_PORT, () => {
     console.log("Server running on port: " + HTTP_PORT)
 });
-
+var options = {
+    explorer: true
+  };
+  
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
 // Logging
 app.use(morgan('tiny'));
 
