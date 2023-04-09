@@ -4,7 +4,7 @@ const auth = require("../libs/middleware")
 module.exports = function(app){
 
     app.route("/recipes")
-        .get(auth.isAuthenticated,recipe.getAll)
+        .get(recipe.getAll)
         .post(auth.isAuthenticated,recipe.postRecipe)
 
     app.route("/recipes/:recipe_id")

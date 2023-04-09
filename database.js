@@ -50,6 +50,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
 
         db.run(`CREATE TABLE feedRecipes (
                     recipe_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    image text,
                     title text,
                     ingredients text,
                     directions text,
@@ -64,6 +65,13 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
                 }else{
                     console.log("Feed Recipes table created")
                 }
+
+                const INSERT_RECIPE = 'INSERT INTO feedRecipes (image,title,ingredients,directions,date_published,date_edited,created_by) VALUES (?,?,?,?,?,?,?)'
+                db.run(INSERT_RECIPE, ["https://www.kitchensanctuary.com/wp-content/uploads/2020/04/Vegetable-Pasta-Bake-Square-FS-19.jpg","Pasta Bake","pasta,cheese,tomato sauce,salt","Boil pasta,add tomato sauce,let it sit for 10minutes at 150,add cheese, stir,serve",Date.now(),Date.now(),1], (err) => {
+                    if(err){
+                        console.log("Recipe one already exists")
+                    }
+                })
             }
         )
         db.run(`CREATE TABLE ratings (
