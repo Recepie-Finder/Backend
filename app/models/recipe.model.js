@@ -40,6 +40,7 @@ const getSingleRecipe = (id, done) => {
         if (!row) return done(404)
         recipe = {
             recipe_id: row.recipe_id,
+            image: row.image,
             title: row.title,
             ingredients: row.ingredients,
             directions: row.directions,

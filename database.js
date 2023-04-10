@@ -51,7 +51,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
         db.run(`CREATE TABLE feedRecipes (
                     recipe_id INTEGER PRIMARY KEY AUTOINCREMENT,
                     image text,
-                    title text,
+                    title text UNIQUE,
                     ingredients text,
                     directions text,
                     date_published DATE,

@@ -8,7 +8,7 @@ module.exports = function(app){
         .post(auth.isAuthenticated,recipe.postRecipe)
 
     app.route("/recipes/:recipe_id")
-        .get(auth.isAuthenticated,recipe.getOne)
+        .get(recipe.getOne)
         .patch(auth.isAuthenticated, recipe.updateRecipe)
         .delete(auth.isAuthenticated, recipe.deleteRecipe);
         
