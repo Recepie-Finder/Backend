@@ -5,7 +5,7 @@ module.exports = function(app){
 
     app.route("/recipes")
         .get(recipe.getAll)
-        .post(auth.isAuthenticated,recipe.postRecipe)
+        .post(recipe.postRecipe)
 
     app.route("/recipes/:recipe_id")
         .get(recipe.getOne)
@@ -14,4 +14,11 @@ module.exports = function(app){
         
     app.route("/recipesByUser")
         .get(auth.isAuthenticated, recipe.getUserRecipes)
+
+    app.route("/recipeSave")
+        .get(auth.isAuthenticated,recipe.getSaved)
+        .post(auth.isAuthenticated,recipe.saveRecipe)
+
+    app.route("/recipeSave/:recipe_id")
+        .delete(auth.isAuthenticated,recipe.deleteSavedRecipe)
 }

@@ -72,6 +72,12 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
                         console.log("Recipe one already exists")
                     }
                 })
+                const INSERT_RECIPE2 = 'INSERT INTO feedRecipes (image,title,ingredients,directions,date_published,date_edited,created_by) VALUES (?,?,?,?,?,?,?)'
+                db.run(INSERT_RECIPE2, ["https://www.kitchensanctuary.com/wp-content/uploads/2020/04/Vegetable-Pasta-Bake-Square-FS-19.jpg","Pasta Baked","cheese,tomato sauce,salt","Boil pasta,add tomato sauce,let it sit for 10minutes at 150,add cheese, testing with the tested testing tested working with a test, stir,serve",Date.now(),Date.now(),1], (err) => {
+                    if(err){
+                        console.log("Recipe two already exists")
+                    }
+                })
             }
         )
         db.run(`CREATE TABLE ratings (
@@ -92,11 +98,17 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
     }
 )
         db.run(`CREATE TABLE savedRecipes (
-            recipe_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            recipe_id INTEGER,
+            saved_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            image text,
             title text,
             ingredients text,
+            directions text,
             date_published INTEGER,
+            created_by INTEGER,
             saved_by INTEGER,
+            UNIQUE(recipe_id,saved_by)
+            FOREIGN KEY(recipe_id) REFERENCES feedRecipes(recipe_id)
             FOREIGN KEY(saved_by) REFERENCES users(user_id)
         )`,
     (err) => {

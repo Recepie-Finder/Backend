@@ -10,8 +10,23 @@ const getAll = (req,res) => {
     })
 }
 
+const getSaved = (req,res) => {
+    let token = req.get('X-Authorization')
+    users.getIdFromToken(token,(err,user_id) => {
+        if(err || user_id === null) {
+            return res.sendStatus(400)
+        }
+        recipe.getSavedRecipes(user_id,(err,num_rows,results) => {
+            if(err) return res.sendStatus(500)
+
+            return res.status(200).send(results)
+        })
+    })
+}
+
 const postRecipe = (req,res) => {
     const schema = Joi.object({
+        image: Joi.string().required(),
         title: Joi.string().required(),
         ingredients: Joi.string().required(),
         directions: Joi.string().required(),
@@ -29,6 +44,33 @@ const postRecipe = (req,res) => {
         recipe.postNewRecipe(recipes,user_id,(err,id) => {
             if(err) return res.sendStatus(400)
     
+            return res.status(201).send({recipe_id: id})
+        })
+    })
+}
+
+const saveRecipe = (req,res) => {
+    const schema = Joi.object({
+        recipe_id: Joi.number().required(),
+        image: Joi.string().required(),
+        title: Joi.string().required(),
+        ingredients: Joi.string(),
+        directions: Joi.string(),
+        date_published: Joi.string(),
+        created_by: Joi.number(),
+      });
+    const { error } = schema.validate(req.body)
+    if(error) return res.status(400).send(error.details[0].message)
+    let recipes = Object.assign({}, req.body)
+    let token = req.get('X-Authorization')
+
+    users.getIdFromToken(token,(err,user_id) => {
+        if(err || user_id === null) {
+            return res.sendStatus(400)
+        }
+        recipe.saveNewRecipe(recipes,user_id,(err,id) => {
+            if(err) return res.sendStatus(400)
+
             return res.status(201).send({recipe_id: id})
         })
     })
@@ -81,6 +123,14 @@ const deleteRecipe = (req, res) => {
     })
 }
 
+const deleteSavedRecipe = (req,res) => {
+    let recipe_id = parseInt(req.params.recipe_id)
+    recipe.deleteSaved(recipe_id,(err) => {
+        if (err) return res.sendStatus(500)
+        return res.sendStatus(200)
+    })
+}
+
 const getOne = (req, res) => {
     let recipe_id = parseInt(req.params.recipe_id);
     recipe.getSingleRecipe(recipe_id, (err, recipe) => {
@@ -109,5 +159,8 @@ module.exports = {
     postRecipe:postRecipe,
     updateRecipe:updateRecipe,
     deleteRecipe:deleteRecipe,
-    getUserRecipes:getUserRecipes
+    getUserRecipes:getUserRecipes,
+    saveRecipe:saveRecipe,
+    getSaved:getSaved,
+    deleteSavedRecipe:deleteSavedRecipe
 }
