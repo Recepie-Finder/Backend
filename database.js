@@ -98,13 +98,13 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
     }
 )
         db.run(`CREATE TABLE savedRecipes (
-            recipe_id INTEGER,
+            recipe_id INTEGER NULL,
             saved_id INTEGER PRIMARY KEY AUTOINCREMENT,
             image text,
             title text,
-            ingredients text,
-            directions text,
-            date_published INTEGER,
+            ingredients text NULL,
+            directions text NULL,
+            date_published INTEGER NULL,
             created_by INTEGER,
             saved_by INTEGER,
             UNIQUE(recipe_id,saved_by)

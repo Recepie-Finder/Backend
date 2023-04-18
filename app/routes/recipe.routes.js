@@ -19,6 +19,6 @@ module.exports = function(app){
         .get(auth.isAuthenticated,recipe.getSaved)
         .post(auth.isAuthenticated,recipe.saveRecipe)
 
-    app.route("/recipeSave/:recipe_id")
+    app.route("/recipeSave/:saved_id")
         .delete(auth.isAuthenticated,recipe.deleteSavedRecipe)
 }

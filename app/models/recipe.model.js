@@ -30,6 +30,7 @@ const getSavedRecipes = (id,done) => {
 
         results.push({
             recipe_id: row.recipe_id,
+            saved_id: row.saved_id,
             image: row.image,
             title: row.title,
             ingredients: row.ingredients,
@@ -111,9 +112,9 @@ const deleteRecipe = (recipe_id, done) => {
     })
 }
 
-const deleteSaved = (recipe_id, done) => {
-    const sql = 'DELETE FROM savedRecipes WHERE recipe_id=?';
-    db.run(sql, [recipe_id], (err) => {
+const deleteSaved = (saved_id, done) => {
+    const sql = 'DELETE FROM savedRecipes WHERE saved_id=?';
+    db.run(sql, [saved_id], (err) => {
         return done(err)
     })
 }

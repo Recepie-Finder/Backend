@@ -51,12 +51,12 @@ const postRecipe = (req,res) => {
 
 const saveRecipe = (req,res) => {
     const schema = Joi.object({
-        recipe_id: Joi.number().required(),
+        recipe_id: Joi.number().allow(null),
         image: Joi.string().required(),
         title: Joi.string().required(),
-        ingredients: Joi.string(),
-        directions: Joi.string(),
-        date_published: Joi.string(),
+        ingredients: Joi.string().allow(null),
+        directions: Joi.string().allow(null),
+        date_published: Joi.string().allow(null),
         created_by: Joi.number(),
       });
     const { error } = schema.validate(req.body)
@@ -124,8 +124,8 @@ const deleteRecipe = (req, res) => {
 }
 
 const deleteSavedRecipe = (req,res) => {
-    let recipe_id = parseInt(req.params.recipe_id)
-    recipe.deleteSaved(recipe_id,(err) => {
+    let saved_id = parseInt(req.params.saved_id)
+    recipe.deleteSaved(saved_id,(err) => {
         if (err) return res.sendStatus(500)
         return res.sendStatus(200)
     })
